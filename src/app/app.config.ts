@@ -1,9 +1,14 @@
 import { ApplicationConfig } from "@angular/core";
 import { provideRouter } from "@angular/router";
-import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
+import { provideEnvironmentNgxMask } from "ngx-mask";
 
 import { routes } from "./app.routes";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideEnvironmentNgxMask()]
+  providers: [
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    provideEnvironmentNgxMask()
+  ]
 };
