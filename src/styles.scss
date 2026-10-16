@@ -1,3 +1,4 @@
+
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
 // components according to the Material 3 design spec.
@@ -6,12 +7,54 @@
 @use '@angular/material' as mat;
 
 html {
-  @include mat.theme((color: (primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    ));
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}
+
+// ==================== Tipos de letra ======================
+@font-face {
+    font-family: 'Nexa-Bold';
+    src: url('/assets/fonts/NexaBold.eot');
+    src: url('/assets/fonts/NexaBold.eot?#iefix') format('embedded-opentype'),
+        url('/assets/fonts/NexaBold.woff2') format('woff2'),
+        url('/assets/fonts/NexaBold.woff') format('woff'),
+        url('/assets/fonts/NexaBold.ttf') format('truetype'),
+        url('/assets/fonts/NexaBold.svg#NexaBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nexa-Light';
+  src: url('/assets/fonts/NexaLight.eot');
+  src: url('/assets/fonts/NexaLight.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/NexaLight.woff2') format('woff2'),
+    url('/assets/fonts/NexaLight.woff') format('woff'),
+    url('/assets/fonts/NexaLight.ttf') format('truetype'),
+    url('/assets/fonts/NexaLight.svg#NexaLight') format('svg');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nexa';
+  src: url('/assets/fonts/NexaRegular.eot');
+  src: url('/assets/fonts/NexaRegular.eot?#iefix') format('embedded-opentype'),
+    url('/assets/fonts/NexaRegular.woff2') format('woff2'),
+    url('/assets/fonts/NexaRegular.woff') format('woff'),
+    url('/assets/fonts/NexaRegular.ttf') format('truetype'),
+    url('/assets/fonts/NexaRegular.svg#NexaRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
@@ -30,3 +73,7 @@ body {
   // Reset the user agent margin.
   margin: 0;
 }
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
