@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-registro-maestros',
@@ -6,15 +6,13 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './registro-maestros.html',
   styleUrl: './registro-maestros.scss',
 })
+export class RegistroMaestros implements OnInit {
+  @Input() rol: string = '';
+  @Input() datos_user: any = {};
 
-export class RegistroMaestros implements OnInit{
-
-  @Input() rol: string = "";
-  @Input() dato_user: any = {};
-
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
-    
   }
+
 }

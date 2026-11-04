@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ErrorsService } from './tools/errors-service';
 import { ValidatorService } from './tools/validator-service';
-import { environment } from '../../enviroments/environment';
+import { environment } from '../../environments/environment';
 
 
 //Estas son variables para las cookies
