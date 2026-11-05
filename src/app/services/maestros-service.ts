@@ -49,7 +49,7 @@ export class MaestrosService {
     if(!this.validatorService.required(data["id"])){
       error["id"] = this.errorService.required;
     }
-
+    
     if(!this.validatorService.required(data["id_trabajador"])){
       error["id_trabajador"] = this.errorService.required;
     }
@@ -71,9 +71,11 @@ export class MaestrosService {
     }
     
     if(!this.validatorService.required(data["fecha_nacimiento"])){
-        error["fecha_nacimiento"] = this.errorService.required;
+      error["fecha_nacimiento"] = this.errorService.required;
     }else if(!this.validatorService.date(data["fecha_nacimiento"])){
-        error["fecha_nacimiento"] = this.errorService.betweenDate;
+      error["fecha_nacimiento"] = this.errorService.date;
+    }else if(!this.validatorService.dateBetween(data["fecha_nacimiento"], '1920-01-01', new Date())){
+      error["fecha_nacimiento"] = this.errorService.betweenDate;
     }
     
     if(!this.validatorService.required(data["telefono"])){

@@ -8,16 +8,16 @@
       </div>
 
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>ID de maestro</mat-label>
+        <mat-label>ID de trabajador</mat-label>
         <input
           matInput
-          [(ngModel)]="maestro.clave_maestro"
-          name="id"
-          placeholder="Escribe clave de maestro"
+          [(ngModel)]="maestro.id_trabajador"
+          name="id_trabajador"
+          placeholder="Escribe ID de trabajador"
         />
       </mat-form-field>
-      @if (errors.clave_maestro) {
-        <div class="invalid-feedback">{{ errors.clave_maestro }}</div>
+      @if (errors.id_trabajador) {
+        <div class="invalid-feedback">{{ errors.id_trabajador }}</div>
       }
 
       <mat-form-field class="mat-input" appearance="outline">
@@ -59,40 +59,18 @@
         <div class="invalid-feedback">{{ errors.email }}</div>
       }
 
-      @if (!editar) {
-        <mat-form-field class="mat-input" appearance="outline">
-          <mat-label>Contraseña</mat-label>
-          <input
-            matInput
-            [(ngModel)]="maestro.password"
-            [type]="inputType_1"
-            placeholder="Escribe contraseña"
-          />
-          <mat-icon matSuffix class="eye-icon" (click)="showPassword()">
-            {{ hide_1 ? 'visibility_off' : 'visibility' }}
-          </mat-icon>
-        </mat-form-field>
-      }
-      @if (errors.password) {
-        <div class="invalid-feedback">{{ errors.password }}</div>
-      }
-
-      @if (!editar) {
-        <mat-form-field class="mat-input" appearance="outline">
-          <mat-label>Confirmar contraseña</mat-label>
-          <input
-            matInput
-            [(ngModel)]="maestro.confirmar_password"
-            [type]="inputType_2"
-            placeholder="Confirma la contraseña"
-          />
-          <mat-icon matSuffix class="eye-icon" (click)="showPwdConfirmar()">
-            {{ hide_2 ? 'visibility_off' : 'visibility' }}
-          </mat-icon>
-        </mat-form-field>
-      }
-      @if (errors.confirmar_password) {
-        <div class="invalid-feedback">{{ errors.confirmar_password }}</div>
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input
+          matInput
+          type="date"
+          [max]="maxDate"
+          [(ngModel)]="maestro.fecha_nacimiento"
+          placeholder="Escribe fecha de nacimiento"
+        />
+      </mat-form-field>
+      @if (errors.fecha_nacimiento) {
+        <div class="invalid-feedback">{{ errors.fecha_nacimiento }}</div>
       }
 
       <mat-form-field class="mat-input" appearance="outline">
@@ -125,19 +103,27 @@
       }
 
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>Edad</mat-label>
-        <input matInput [(ngModel)]="maestro.edad" mask="00" placeholder="Escribe la edad" />
+        <mat-label>Cubículo</mat-label>
+        <input
+          matInput
+          [(ngModel)]="maestro.cubiculo"
+          placeholder="Escribe cubículo"
+        />
       </mat-form-field>
-      @if (errors.edad) {
-        <div class="invalid-feedback">{{ errors.edad }}</div>
+      @if (errors.cubiculo) {
+        <div class="invalid-feedback">{{ errors.cubiculo }}</div>
       }
 
       <mat-form-field class="mat-input" appearance="outline">
-        <mat-label>Ocupación</mat-label>
-        <input matInput [(ngModel)]="maestro.ocupacion" placeholder="Escribe la ocupación" />
+        <mat-label>Área de investigación</mat-label>
+        <input
+          matInput
+          [(ngModel)]="maestro.area_investigacion"
+          placeholder="Escribe área de investigación"
+        />
       </mat-form-field>
-      @if (errors.ocupacion) {
-        <div class="invalid-feedback">{{ errors.ocupacion }}</div>
+      @if (errors.area_investigacion) {
+        <div class="invalid-feedback">{{ errors.area_investigacion }}</div>
       }
 
       <div class="section-buttons">

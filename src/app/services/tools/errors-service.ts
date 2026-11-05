@@ -17,6 +17,7 @@ export class ErrorsService {
     this.numeric = 'Solo se aceptan valores numéricos';
     this.betweenDate = 'Fecha no es válida';
     this.email = 'Favor de introducir un correo con el formato correcto';
+    this.date = 'Formato de fecha no válido';
   }
 
   public between(min: any, max: any) {
