@@ -26,6 +26,8 @@ export interface DatosMaestro {
   email: string;
   fecha_nacimiento: string;
   telefono: string;
+  password: string;
+  confirmar_password: string;
   rfc: string;
   cubiculo: string;
   area_investigacion: string[];
@@ -42,6 +44,8 @@ export interface DatosAlumno {
   curp: string;
   rfc: string;
   edad: number;
+  password: string;
+  confirmar_password: string;
   telefono: string;
   ocupacion: string;
 }

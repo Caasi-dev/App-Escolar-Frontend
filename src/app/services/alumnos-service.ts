@@ -36,7 +36,9 @@ export class alumnnosService {
       rfc: "",
       edad: 0,
       telefono: "",
-      ocupacion: ""
+      ocupacion: "",
+      password: "",
+      confirmar_password: ""
     };
   }
 
@@ -121,6 +123,16 @@ export class alumnnosService {
 
     if(!this.validatorService.required(data["ocupacion"])){
       error["ocupacion"] = this.errorService.required;
+    }
+
+    if(!editar){
+      if(!this.validatorService.required(data["password"])){
+        error["password"] = this.errorService.required;
+      }
+
+      if(!this.validatorService.required(data["confirmar_password"])){
+        error["confirmar_password"] = this.errorService.required;
+      }
     }
 
 

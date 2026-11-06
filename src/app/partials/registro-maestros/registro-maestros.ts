@@ -32,6 +32,12 @@ export class RegistroMaestros implements OnInit {
   public editar: boolean = false;
   public idUser: number = 0;
 
+  //Variables para el campo de contraseña
+  public hide_1: boolean = false;
+  public hide_2: boolean = false;
+  public inputType_1: string = 'password';
+  public inputType_2: string = 'password';
+
   //Opciones del menú de área de investigación (selección múltiple con checkbox)
   public areasInvestigacion: string[] = [
     'Aplicaciones Web',
@@ -60,6 +66,26 @@ export class RegistroMaestros implements OnInit {
 
   public regresar(): void {
     this.location.back();
+  }
+
+  public showPassword(): void {
+    if (this.inputType_1 === 'password') {
+      this.inputType_1 = 'text';
+      this.hide_1 = true;
+    } else {
+      this.inputType_1 = 'password';
+      this.hide_1 = false;
+    }
+  }
+
+  public showPwdConfirmar(): void {
+    if (this.inputType_2 === 'password') {
+      this.inputType_2 = 'text';
+      this.hide_2 = true;
+    } else {
+      this.inputType_2 = 'password';
+      this.hide_2 = false;
+    }
   }
 
   public registrar(){

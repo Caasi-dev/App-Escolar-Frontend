@@ -35,6 +35,8 @@ export class MaestrosService {
       telefono: "",
       rfc: "",
       cubiculo: "",
+      password: "",
+      confirmar_password: "",
       area_investigacion: [],
     };
   }
@@ -106,6 +108,16 @@ export class MaestrosService {
 
     if(!this.validatorService.required(data["area_investigacion"])){
       error["area_investigacion"] = this.errorService.required;
+    }
+
+    if (!editar) {
+      if (!this.validatorService.required(data["password"])) {
+        error["password"] = this.errorService.required;
+      }
+
+      if (!this.validatorService.required(data["confirmar_password"])) {
+        error["confirmar_password"] = this.errorService.required;
+      }
     }
 
     //Return JSON con los errores encontrados, si no hay errores el JSON estará vacío
