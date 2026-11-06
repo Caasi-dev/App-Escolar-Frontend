@@ -35,7 +35,7 @@ export class MaestrosService {
       telefono: "",
       rfc: "",
       cubiculo: "",
-      area_investigacion: 0,
+      area_investigacion: [],
     };
   }
 
@@ -52,7 +52,9 @@ export class MaestrosService {
     
     if(!this.validatorService.required(data["id_trabajador"])){
       error["id_trabajador"] = this.errorService.required;
-    }
+    } else if(!this.validatorService.numeric(data["id_trabajador"])){
+      error["id_trabajador"] = this.errorService.numeric
+    } 
 
     if(!this.validatorService.required(data["first_name"])){
       error["first_name"] = this.errorService.required;
@@ -80,6 +82,12 @@ export class MaestrosService {
     
     if(!this.validatorService.required(data["telefono"])){
       error["telefono"] = this.errorService.required;
+    } else if(!this.validatorService.numeric(data["telefono"])){
+      error["telefono"] = this.errorService.numeric;
+    }else if(!this.validatorService.min(data["telefono"], 10)){
+      error["telefono"] = this.errorService.min(10);
+    }else if(!this.validatorService.max(data["telefono"], 10)){
+      error["telefono"] = this.errorService.max(10);
     }
 
     if(!this.validatorService.required(data["rfc"])){
@@ -92,6 +100,8 @@ export class MaestrosService {
 
     if(!this.validatorService.required(data["cubiculo"])){
       error["cubiculo"] = this.errorService.required;
+    } else if(!this.validatorService.words(data["cubiculo"])){
+      error["cubiculo"] = this.errorService.generic;
     }
 
     if(!this.validatorService.required(data["area_investigacion"])){

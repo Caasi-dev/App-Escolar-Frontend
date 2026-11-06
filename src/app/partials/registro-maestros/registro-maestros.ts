@@ -4,11 +4,14 @@ import { Location } from '@angular/common';
 import { MaestrosService } from '../../services/maestros-service';
 //Importar la interfaz de datos del maestro
 import { DatosMaestro } from '../../interfaces/usuarios.interfaces';
+//Importar la lista despegable de Angular Matterial
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-registro-maestros',
   imports: [
-    ...SHARED_IMPORTS
+    ...SHARED_IMPORTS,
+    MatSelectModule
   ],
   templateUrl: './registro-maestros.html',
   styleUrl: './registro-maestros.scss',
@@ -28,6 +31,20 @@ export class RegistroMaestros implements OnInit {
   public errors: any = {};
   public editar: boolean = false;
   public idUser: number = 0;
+
+  //Opciones del menú de área de investigación (selección múltiple con checkbox)
+  public areasInvestigacion: string[] = [
+    'Aplicaciones Web',
+    'Programación 1',
+    'Bases de datos',
+    'Tecnologías Web',
+    'Minería de datos',
+    'Desarrollo móvil',
+    'Estructuras de datos',
+    'Administración de redes',
+    'Ingeniería de Software',
+    'Administración de S.O.',
+  ];
 
   //Variable para verificar que la fecha de nacimiento no sea futura
 

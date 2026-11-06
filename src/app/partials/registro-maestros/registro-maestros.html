@@ -116,11 +116,11 @@
 
       <mat-form-field class="mat-input" appearance="outline">
         <mat-label>Área de investigación</mat-label>
-        <input
-          matInput
-          [(ngModel)]="maestro.area_investigacion"
-          placeholder="Escribe área de investigación"
-        />
+        <mat-select [(ngModel)]="maestro.area_investigacion" multiple>
+          @for (area of areasInvestigacion; track area) {
+            <mat-option [value]="area">{{ area }}</mat-option>
+          }
+        </mat-select>
       </mat-form-field>
       @if (errors.area_investigacion) {
         <div class="invalid-feedback">{{ errors.area_investigacion }}</div>

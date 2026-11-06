@@ -28,7 +28,7 @@ export interface DatosMaestro {
   telefono: string;
   rfc: string;
   cubiculo: string;
-  area_investigacion: number;
+  area_investigacion: string[];
 }
 
 // Interfaz datos de usuario de alumno
