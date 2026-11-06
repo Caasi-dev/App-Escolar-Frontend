@@ -8,7 +8,7 @@ import { DatosAlumno } from '../interfaces/usuarios.interfaces';
 @Injectable({
   providedIn: 'root',
 })
-export class alumnnosService {
+export class alumnosService {
   //Inyectar los servicios para validaciones y errores
   private http = inject(HttpClient);
   private authService = inject(AuthService);
@@ -24,7 +24,7 @@ export class alumnnosService {
   }
 
   //Método para definir el esquema de validación para los datos del alumno
-  public esquemaAlumnno(): DatosAlumno {
+  public esquemaAlumno(): DatosAlumno {
     return {
       id: 0,
       matricula: 0,
@@ -42,21 +42,21 @@ export class alumnnosService {
     };
   }
 
-  public validaralumnno(data: DatosAlumno, editar: boolean){
+  public validaralumno(data: DatosAlumno, editar: boolean){
 
-    // Lógica de validación para los datos del alumnno
+    // Lógica de validación para los datos del alumno
     const error: any = {};
 
     //Validacios
-      
-    if(!this.validatorService.required(data["id"])){
-      error["id"] = this.errorService.required;
-    }
     
     if(!this.validatorService.required(data["matricula"])){
       error["matricula"] = this.errorService.required;
     } else if(!this.validatorService.numeric(data["matricula"])){
       error["matricula"] = this.errorService.numeric;
+    } else if(!this.validatorService.min(data["matricula"], 9)){
+      error["matricula"] = this.errorService.min(9);
+    } else if(!this.validatorService.max(data["matricula"], 9)){
+      error["matricula"] = this.errorService.max(9);
     }
 
     if(!this.validatorService.required(data["first_name"])){
@@ -133,6 +133,10 @@ export class alumnnosService {
       if(!this.validatorService.required(data["confirmar_password"])){
         error["confirmar_password"] = this.errorService.required;
       }
+    }
+
+    if(data["password"] !== data["confirmar_password"]){
+      error["confirmar_password"] = "Las contraseñas no coinciden";
     }
 
 

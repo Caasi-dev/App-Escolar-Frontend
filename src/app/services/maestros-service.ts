@@ -48,10 +48,6 @@ export class MaestrosService {
 
     //Validaciones
     
-    if(!this.validatorService.required(data["id"])){
-      error["id"] = this.errorService.required;
-    }
-    
     if(!this.validatorService.required(data["id_trabajador"])){
       error["id_trabajador"] = this.errorService.required;
     } else if(!this.validatorService.numeric(data["id_trabajador"])){
@@ -102,8 +98,6 @@ export class MaestrosService {
 
     if(!this.validatorService.required(data["cubiculo"])){
       error["cubiculo"] = this.errorService.required;
-    } else if(!this.validatorService.words(data["cubiculo"])){
-      error["cubiculo"] = this.errorService.generic;
     }
 
     if(!this.validatorService.required(data["area_investigacion"])){
@@ -119,6 +113,11 @@ export class MaestrosService {
         error["confirmar_password"] = this.errorService.required;
       }
     }
+
+    if(data["password"] !== data["confirmar_password"]){
+      error["confirmar_password"] = "Las contraseñas no coinciden";
+    }
+
 
     //Return JSON con los errores encontrados, si no hay errores el JSON estará vacío
     return error;

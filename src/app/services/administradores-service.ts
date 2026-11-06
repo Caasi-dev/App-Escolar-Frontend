@@ -100,6 +100,11 @@ export class AdministradoresService {
       error["ocupacion"] = this.errorService.required;
     }
 
+    if(data["password"] !== data["confirmar_password"]){
+      error["confirmar_password"] = "Las contraseñas no coinciden";
+    }
+
+
     //Return JSON con los errores encontrados, si no hay errores el JSON estará vacío
     return error;
   }

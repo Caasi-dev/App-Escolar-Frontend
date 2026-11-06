@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { SHARED_IMPORTS } from '../../shared/shared.imports';
 import { Location } from '@angular/common';
-import { alumnnosService } from '../../services/alumnos-service';
+import { alumnosService } from '../../services/alumnos-service';
 //Importar la interfaz de datos del alumno
 import { DatosAlumno } from '../../interfaces/usuarios.interfaces';
 
@@ -20,7 +20,7 @@ export class RegistroAlumnos implements OnInit {
   //Inyectar el servicio Location para poder regresar a la página anterior
   private location = inject(Location);
   //Inyectar el servicio de alumnos para poder registrar y actualizar los datos del alumno
-  private alumnosService = inject(alumnnosService);
+  private alumnosService = inject(alumnosService);
 
 
   //Declarar las variables para el formulario de registro
@@ -42,7 +42,7 @@ export class RegistroAlumnos implements OnInit {
 
   ngOnInit(): void {
     //Si el rol es alumno, se inicializa el objeto alumno con los datos del usuario
-    this.alumno = this.alumnosService.esquemaAlumnno();
+    this.alumno = this.alumnosService.esquemaAlumno();
     console.log('Datos del alumno:', this.alumno);
   }
 
@@ -73,7 +73,7 @@ export class RegistroAlumnos implements OnInit {
   public registrar(){
     // Lógica para validar si el usuario alumno trae datos o no en los campos del formulario
     this.errors = {};
-    this.errors = this.alumnosService.validaralumnno(this.alumno, this.editar);
+    this.errors = this.alumnosService.validaralumno(this.alumno, this.editar);
 
     console.log('Errores de validación:', this.errors);
 
