@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { alumnosService } from '../../services/alumnos-service';
 //Importar la interfaz de datos del alumno
 import { DatosAlumno } from '../../interfaces/usuarios.interfaces';
+import { NotificationService } from '../../services/tools/notification-service';
+
 
 @Component({
   selector: 'app-registro-alumnos',
@@ -21,6 +23,8 @@ export class RegistroAlumnos implements OnInit {
   private location = inject(Location);
   //Inyectar el servicio de alumnos para poder registrar y actualizar los datos del alumno
   private alumnosService = inject(alumnosService);
+  //Inyectar el servicio de notificaciones para mostrar mensajes al usuario
+  private notificationService = inject(NotificationService);
 
 
   //Declarar las variables para el formulario de registro
@@ -82,8 +86,27 @@ export class RegistroAlumnos implements OnInit {
       return;
     }
 
+    //Validar que las contraseñas coincidan
+    if (this.alumno.password !== this.alumno.confirmar_password) {
+      this.errors['confirmar_password'] = 'Las contraseñas no coinciden';
+      this.notificationService.error('Las contraseñas no coinciden');
+      this.alumno.password = '';
+      this.alumno.confirmar_password = '';
+      return;
+    }
+
     //Lógica para registrar o actualizar los datos del alumno
-    // TODO: Aquí se debe implementar la lógica para registrar o actualizar los datos del alumno en el backend, utilizando el servicio de alumnos.
+    this.alumnosService.registrarAlumno(this.alumno).subscribe(
+      (response) => {
+        //Dentro del response se puede obtener el mensaje de éxito o error del backend, así como los datos del alumno registrado
+        console.log('Respuesta del backend:', response);
+        this.notificationService.success('Alumno registrado correctamente');
+        this.regresar();
+      }, (error) => {
+        console.error('Error al registrar el alumno:', error);
+        this.notificationService.error('Error al registrar el alumno');
+      }
+    )
 
   }
 

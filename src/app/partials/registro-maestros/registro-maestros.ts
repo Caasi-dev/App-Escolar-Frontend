@@ -6,6 +6,8 @@ import { MaestrosService } from '../../services/maestros-service';
 import { DatosMaestro } from '../../interfaces/usuarios.interfaces';
 //Importar la lista despegable de Angular Matterial
 import { MatSelectModule } from '@angular/material/select';
+import { NotificationService } from '../../services/tools/notification-service';
+
 
 @Component({
   selector: 'app-registro-maestros',
@@ -24,6 +26,8 @@ export class RegistroMaestros implements OnInit {
   private location = inject(Location);
   //Inyectar el servicio de maestros para poder registrar y actualizar los datos del maestro
   private maestrosService = inject(MaestrosService);
+  //Inyectar el servicio de notificaciones para mostrar mensajes al usuario
+  private notificationService = inject(NotificationService);
 
 
   //Declarar las variables para el formulario de registro
@@ -100,8 +104,27 @@ export class RegistroMaestros implements OnInit {
       return;
     }
 
+    //Validar que las contraseñas coincidan
+    if (this.maestro.password !== this.maestro.confirmar_password) {
+      this.errors['confirmar_password'] = 'Las contraseñas no coinciden';
+      this.notificationService.error('Las contraseñas no coinciden');
+      this.maestro.password = '';
+      this.maestro.confirmar_password = '';
+      return;
+    }
+
     //Lógica para registrar o actualizar los datos del maestro
-    // TODO: Aquí se debe implementar la lógica para registrar o actualizar los datos del maestro en el backend, utilizando el servicio de maestros.
+    this.maestrosService.registrarMaestro(this.maestro).subscribe(
+      (response) => {
+        //Dentro del response se puede obtener el mensaje de éxito o error del backend, así como los datos del maestro registrado
+        console.log('Respuesta del backend:', response);
+        this.notificationService.success('Maestro registrado correctamente');
+        this.regresar();
+      }, (error) => {
+        console.error('Error al registrar el maestro:', error);
+        this.notificationService.error('Error al registrar el maestro');
+      }
+    )
 
   }
 
