@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth-service';
 import { ErrorsService } from './tools/errors-service';
 import { ValidatorService } from './tools/validator-service';
-import { DatosAdministrador } from '../interfaces/usuarios.interfaces';
+import { AdministradorApi, DatosAdministrador } from '../interfaces/usuarios.interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -111,5 +111,11 @@ export class AdministradoresService {
   public registrarAdmin(data: DatosAdministrador): Observable <any> {
     // Llamada al endpoint de la API directamente en el return para registrar un nuevo administrador
     return this.http.post<any>(`${environment.url_api}/admin/`, data, { headers: this.getAuthHeaders() });
+  }
+
+  // Método para obtener la lista de administradores desde la base de datos
+  public obtenerListaAdmins(): Observable<AdministradorApi[]> {
+    // Llamada al endpoint de la API directamente en el return para obtener la lista de administradores
+    return this.http.get<AdministradorApi[]>(`${environment.url_api}/lista-admins/`, { headers: this.getAuthHeaders() });
   }
 }

@@ -5,6 +5,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ErrorsService } from './tools/errors-service';
 import { ValidatorService } from './tools/validator-service';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
+import { ErroresFormulario, RespuestaLogin } from '../interfaces/usuarios.interfaces';
 
 
 //Estas son variables para las cookies
@@ -24,6 +26,44 @@ export class AuthService {
   private router = inject(Router);
   private validatorService = inject(ValidatorService);
   private errorService =  inject(ErrorsService);
+
+  // Función para validar el usuario y la contraseña
+  public validarLogin(username: string, password: string): ErroresFormulario {
+    const data = {
+      "username": username,
+      "password": password
+    };
+    const error: ErroresFormulario = {};
+
+    if(!this.validatorService.required(data["username"])){
+      error["username"] = this.errorService.required;
+    }else if(!this.validatorService.max(data["username"], 40)){
+      error["username"] = this.errorService.max(40);
+    }else if (!this.validatorService.email(data['username'])) {
+      error['username'] = this.errorService.email;
+    }
+
+    if(!this.validatorService.required(data["password"])){
+      error["password"] = this.errorService.required;
+    }
+
+    return error;
+  }
+
+  // Función para enviar la solicitud de login al servidor
+  public login(username: string, password: string): Observable<RespuestaLogin> {
+    const data = {
+      "username": username,
+      "password": password
+    };
+
+    return this.http.post<RespuestaLogin>(`${environment.url_api}/login/`, data);
+  }
+
+  // Cerrar sesión
+  public logout(): Observable<unknown> {
+    return this.http.get(`${environment.url_api}/logout/`);
+  }
 
   // Funciones para manejar las cookies de sesión y autenticación del usuario
 
@@ -90,5 +130,39 @@ export class AuthService {
   // Funcion para obtener el rol del usuario
   public getUserRole(){
     return this.cookieService.get(role_name_cookie_name);
+  }
+
+  // ---- Role helpers (fuente única de verdad para toda la app) ----
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 'administrador';
+  }
+
+  isTeacher(): boolean {
+    return this.getUserRole() === 'maestro';
+  }
+
+  isStudent(): boolean {
+    return this.getUserRole() === 'alumno';
+  }
+
+  canSeeAdminItems(): boolean {
+    return this.isAdmin();
+  }
+
+  canSeeTeacherItems(): boolean {
+    return this.isAdmin() || this.isTeacher();
+  }
+
+  canSeeStudentItems(): boolean {
+    return this.isAdmin() || this.isTeacher() || this.isStudent();
+  }
+
+  canSeeHomeItem(): boolean {
+    return this.isAdmin() || this.isTeacher() || this.isStudent();
+  }
+
+  canSeeRegisterItem(): boolean {
+    return this.isAdmin() || this.isTeacher();
   }
 }
