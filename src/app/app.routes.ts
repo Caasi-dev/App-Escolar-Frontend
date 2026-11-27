@@ -3,7 +3,7 @@ import { DashboardLayout } from './layout/dashboard-layout/dashboard-layout';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
 import { authGuard } from './guards/auth.guard';
 import { publicGuard } from './guards/public.guard';
-import { publicRegisterMatch } from './guards/registrer-users.guard';
+import { registerGuard } from './guards/registrer-users.guard';
 
 export const routes: Routes = [
 
@@ -20,7 +20,7 @@ export const routes: Routes = [
       // Registro público: solo coincide cuando no hay sesión iniciada
       {
         path: 'registro-usuarios',
-        canMatch: [publicRegisterMatch],
+        canActivate: [registerGuard],
         loadComponent: () => import('./screens/registro-usuarios-screen/registro-usuarios-screen').then(m => m.RegistroUsuariosScreen),
       },
     ]

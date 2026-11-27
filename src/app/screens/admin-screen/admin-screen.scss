@@ -1,2 +1,21 @@
 /* Los estilos de la tabla son los mismos que en maestros-screen */
 @use '../../shared/styles/listado';
+
+/* Estilos para tabla Bootstrap 5 respetando tema claro/oscuro */
+.table {
+  --bs-table-bg: var(--table-bg, #fff);
+  --bs-table-color: var(--text-main, #231F20);
+  --bs-table-striped-color: var(--text-main, #231F20);
+  --bs-table-hover-color: var(--text-main, #231F20);
+
+  thead th {
+    font-family: Nexa-Bold;
+    font-size: 1rem;
+    border-bottom-color: var(--table-header-border, #231F20);
+  }
+
+  tbody td {
+    font-family: Nexa;
+    font-size: 0.9rem;
+  }
+}

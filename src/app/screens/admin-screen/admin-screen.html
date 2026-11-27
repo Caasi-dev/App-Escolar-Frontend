@@ -14,67 +14,48 @@
     @if (cargando) {
       <!-- Mientras se obtienen los datos del backend -->
       <div class="alert alert-info" role="status">Cargando administradores...</div>
-    } @else if (dataSource.data.length > 0) {
+    } @else if (lista_admins.length > 0) {
       <!-- Si la tabla contiene registros se muestran todos los datos -->
       <div class="table-scroll-wrapper">
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="clave_admin">
-              <th mat-header-cell *matHeaderCellDef>Clave Admin</th>
-              <td mat-cell *matCellDef="let element">{{ element.clave_admin }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="nombre">
-              <th mat-header-cell *matHeaderCellDef>Nombre Completo</th>
-              <td mat-cell *matCellDef="let element">{{ element.user.first_name }} {{ element.user.last_name }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef>Email</th>
-              <td mat-cell *matCellDef="let element">{{ element.user.email }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="rfc">
-              <th mat-header-cell *matHeaderCellDef>RFC</th>
-              <td mat-cell *matCellDef="let element">{{ element.rfc }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="ocupacion">
-              <th mat-header-cell *matHeaderCellDef>Ocupación</th>
-              <td mat-cell *matCellDef="let element">{{ element.ocupacion }}</td>
-            </ng-container>
-
-            <!-- Acciones: se usan botones para que sean accesibles con teclado -->
-            <ng-container matColumnDef="editar">
-              <th mat-header-cell *matHeaderCellDef class="text-center">Editar</th>
-              <td mat-cell *matCellDef="let element" class="td-editar">
-                <button type="button" class="btn btn-link p-0" aria-label="Editar administrador"
-                  (click)="goEditar(element.id)">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="eliminar">
-              <th mat-header-cell *matHeaderCellDef class="text-center">Eliminar</th>
-              <td mat-cell *matCellDef="let element" class="td-eliminar">
-                <button type="button" class="btn btn-link p-0" aria-label="Eliminar administrador"
-                  (click)="delete(element.id)">
-                  <i class="bi bi-trash3-fill"></i>
-                </button>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th scope="col">Clave Admin</th>
+                <th scope="col">Nombre Completo</th>
+                <th scope="col">Email</th>
+                <th scope="col">RFC</th>
+                <th scope="col">Ocupación</th>
+                <th scope="col" class="text-center">Editar</th>
+                <th scope="col" class="text-center">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (admin of lista_admins; track admin.id) {
+                <tr>
+                  <td>{{ admin.clave_admin }}</td>
+                  <td>{{ admin.user.first_name }} {{ admin.user.last_name }}</td>
+                  <td>{{ admin.user.email }}</td>
+                  <td>{{ admin.rfc }}</td>
+                  <td>{{ admin.ocupacion }}</td>
+                  <!-- Acciones: se usan botones para que sean accesibles con teclado -->
+                  <td class="td-editar">
+                    <button type="button" class="btn btn-link p-0" aria-label="Editar administrador"
+                      (click)="goEditar(admin.id)">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                  </td>
+                  <td class="td-eliminar">
+                    <button type="button" class="btn btn-link p-0" aria-label="Eliminar administrador"
+                      (click)="delete(admin.id)">
+                      <i class="bi bi-trash3-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
           </table>
         </div>
-
-        <mat-paginator
-          [pageSizeOptions]="[5, 10, 20]"
-          showFirstLastButtons
-          aria-label="Seleccionar página de administradores">
-        </mat-paginator>
       </div>
     } @else {
       <!-- Esto se muestra cuando no hay datos -->

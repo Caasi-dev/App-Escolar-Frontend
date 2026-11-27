@@ -19,6 +19,7 @@ import {MatInputModule} from '@angular/material/input';
 //Modulos importantes para las tablas
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule} from '@angular/material/sort';
 
 /* =========================
    ngx-mask (inputs de código)
@@ -51,6 +52,7 @@ export const SHARED_IMPORTS = [
   MatRadioModule,
   MatTableModule,
   MatPaginatorModule,
+  MatSortModule,
   /* ngx-mask */
   NgxMaskDirective,
   NgxMaskPipe

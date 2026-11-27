@@ -1,5 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { SHARED_IMPORTS } from '../../shared/shared.imports';
@@ -29,6 +30,7 @@ export class AlumnosScreen implements OnInit {
   public displayedColumns: string[] = [
     'matricula',
     'nombre',
+    'apellido',
     'email',
     'fecha_nacimiento',
     'curp',
@@ -42,16 +44,34 @@ export class AlumnosScreen implements OnInit {
 
   public dataSource = new MatTableDataSource<AlumnoApi>([]);
 
-  // La tabla está dentro de un @if, por eso el paginador se asigna cuando aparece en la vista
+  // La tabla está dentro de un @if, por eso el paginador y el sort se asignan cuando aparecen en la vista
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) {
       this.dataSource.paginator = paginator;
     }
   }
 
+  @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
+    if (sort) {
+      this.dataSource.sort = sort;
+    }
+  }
+
   ngOnInit(): void {
     this.name_user = this.authService.getUserCompleteName();
     this.rol = this.authService.getUserRole();
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'nombre':
+          return item.user.first_name.toLowerCase();
+        case 'apellido':
+          return item.user.last_name.toLowerCase();
+        case 'matricula':
+          return Number(item.matricula);
+        default:
+          return (item as unknown as Record<string, string | number>)[property] ?? '';
+      }
+    };
     this.obtenerAlumnos();
   }
 

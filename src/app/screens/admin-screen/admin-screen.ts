@@ -1,6 +1,4 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { SHARED_IMPORTS } from '../../shared/shared.imports';
@@ -36,14 +34,9 @@ export class AdminScreen implements OnInit {
     'eliminar'
   ];
 
-  public dataSource = new MatTableDataSource<AdministradorApi>([]);
 
   // La tabla está dentro de un @if, por eso el paginador se asigna cuando aparece en la vista
-  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
-    if (paginator) {
-      this.dataSource.paginator = paginator;
-    }
-  }
+  public lista_admins: AdministradorApi[] = [];
 
   ngOnInit(): void {
     // El nombre y el rol se toman de las cookies de sesión guardadas al iniciar sesión
@@ -60,7 +53,7 @@ export class AdminScreen implements OnInit {
       finalize(() => this.cargando = false)
     ).subscribe({
       next: (response) => {
-        this.dataSource.data = response;
+        this.lista_admins = response;
         console.log('Lista de administradores:', response);
       },
       error: () => this.notificationService.error('No se pudo obtener la lista de administradores'),

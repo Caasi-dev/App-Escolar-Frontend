@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth-service';
 import { MaestrosService } from '../../services/maestros-service';
 import { NotificationService } from '../../services/tools/notification-service';
 import { MaestroApi } from '../../interfaces/usuarios.interfaces';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-maestros-screen',
@@ -28,6 +29,7 @@ export class MaestrosScreen implements OnInit {
   public displayedColumns: string[] = [
     'id_trabajador',
     'nombre',
+    'apellido',
     'email',
     'fecha_nacimiento',
     'telefono',
@@ -40,16 +42,34 @@ export class MaestrosScreen implements OnInit {
 
   public dataSource = new MatTableDataSource<MaestroApi>([]);
 
-  // La tabla está dentro de un @if, por eso el paginador se asigna cuando aparece en la vista
+  // La tabla está dentro de un @if, por eso el paginador y el sort se asignan cuando aparecen en la vista
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator | undefined) {
     if (paginator) {
       this.dataSource.paginator = paginator;
     }
   }
 
+  @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
+    if (sort) {
+      this.dataSource.sort = sort;
+    }
+  }
+
   ngOnInit(): void {
     this.name_user = this.authService.getUserCompleteName();
     this.rol = this.authService.getUserRole();
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'nombre':
+          return item.user.first_name.toLowerCase();
+        case 'apellido':
+          return item.user.last_name.toLowerCase();
+        case 'id_trabajador':
+          return Number(item.id_trabajador);
+        default:
+          return (item as unknown as Record<string, string | number>)[property] ?? '';
+      }
+    };
     this.obtenerMaestros();
   }
 
