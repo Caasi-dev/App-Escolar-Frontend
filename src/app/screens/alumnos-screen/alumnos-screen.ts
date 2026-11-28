@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { SHARED_IMPORTS } from '../../shared/shared.imports';
 import { PageHeader } from '../../partials/page-header/page-header';
 import { AuthService } from '../../services/auth-service';
-// En este proyecto la clase del servicio se llama "alumnosService"
 import { alumnosService as AlumnosService } from '../../services/alumnos-service';
 import { NotificationService } from '../../services/tools/notification-service';
 import { AlumnoApi } from '../../interfaces/usuarios.interfaces';
@@ -72,7 +71,34 @@ export class AlumnosScreen implements OnInit {
           return (item as unknown as Record<string, string | number>)[property] ?? '';
       }
     };
+    // El filtro por defecto no revisa objetos anidados (user), por eso se indican los campos a buscar
+    this.dataSource.filterPredicate = (item: AlumnoApi, filtro: string): boolean => {
+      const textoFila = [
+        item.matricula,
+        item.user.first_name,
+        item.user.last_name,
+        item.user.email,
+        item.curp,
+        item.rfc,
+        item.telefono,
+        item.ocupacion
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return textoFila.includes(filtro);
+    };
     this.obtenerAlumnos();
+  }
+
+  public aplicarFiltro(event: Event): void {
+    const valor = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = valor.trim().toLowerCase();
+
+    // Regresa a la primera página para no quedarse en una página vacía
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   public obtenerAlumnos(): void {

@@ -70,7 +70,34 @@ export class MaestrosScreen implements OnInit {
           return (item as unknown as Record<string, string | number>)[property] ?? '';
       }
     };
+    // El filtro por defecto no revisa objetos anidados (user), por eso se indican los campos a buscar
+    this.dataSource.filterPredicate = (item: MaestroApi, filtro: string): boolean => {
+      const textoFila = [
+        item.id_trabajador,
+        item.user.first_name,
+        item.user.last_name,
+        item.user.email,
+        item.rfc,
+        item.telefono,
+        item.cubiculo,
+        item.area_investigacion
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return textoFila.includes(filtro);
+    };
     this.obtenerMaestros();
+  }
+
+  public aplicarFiltro(event: Event): void {
+    const valor = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = valor.trim().toLowerCase();
+
+    // Regresa a la primera página para no quedarse en una página vacía
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   public obtenerMaestros(): void {

@@ -13,6 +13,13 @@
     @if (cargando) {
       <div class="alert alert-info" role="status">Cargando maestros...</div>
     } @else if (dataSource.data.length > 0) {
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Buscar maestro</mat-label>
+        <input matInput (keyup)="aplicarFiltro($event)"
+          placeholder="Nombre, ID trabajador, correo, RFC..." #inputBusqueda>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
       <div class="table-scroll-wrapper">
         <div class="mat-elevation-z8">
           <table mat-table [dataSource]="dataSource" matSort>
@@ -83,6 +90,12 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell p-3" [attr.colspan]="displayedColumns.length">
+                No se encontraron maestros que coincidan con "{{ inputBusqueda.value }}"
+              </td>
+            </tr>
           </table>
         </div>
 
